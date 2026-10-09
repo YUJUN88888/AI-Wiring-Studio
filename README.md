@@ -78,7 +78,7 @@ cargo test --manifest-path src-tauri/Cargo.toml
 - 禁止：未经书面授权的商业经营、企业业务、收费服务、销售、付费集成或其他商业用途。
 - 再分发须保留署名、版权与许可原文（含 `Required Notice:` 行），且不得移除非商业限制。
 - 组织用途：按许可原文，慈善、教育、公共研究、公共安全/卫生、环保与政府机构的使用亦被允许。
-- 商业授权咨询：请在本项目 GitHub 仓库的 **Issues** 页面发起（`{GITHUB_REPO}/issues`，仓库地址待补）。
+- 商业授权咨询：请在本项目 GitHub 仓库的 **Issues** 页面发起（https://github.com/YUJUN88888/AI-Wiring-Studio/issues ）。
 
 > 本项目**不是**符合通常「开源」定义的项目——开源定义不允许限制使用领域，而本项目限制非商业使用。
 >
