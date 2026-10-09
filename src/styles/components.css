@@ -1,0 +1,129 @@
+/*
+ * components.css — 基础组件视觉层（Button / IconButton / Input / Dialog / DropdownMenu / Tabs / Tooltip）。
+ *
+ * 只消费 tokens.css 的令牌，不写死颜色/圆角/间距；不污染裸 button / input / header / aside。
+ * 弹层类名（.aiws-dialog / .aiws-menu / .aiws-tooltip）必须是全局类名：Radix 经 Portal 挂到 body，
+ * 作用域在业务容器下会失效。
+ *
+ * 层级 z-index 约定：画布内浮层 5–6 ＜ 右键菜单 30 ＜ Dialog 遮罩 60 / 内容 61 ＜ 下拉菜单 70 ＜ Tooltip 80。
+ */
+
+/* ── Button ───────────────────────────────────────────── */
+.aiws-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--aiws-space-2);
+  height: var(--aiws-control-h); padding: 0 var(--aiws-space-3);
+  font-family: var(--aiws-font-ui); font-size: var(--aiws-fs-control); font-weight: 500; line-height: 1.2;
+  color: var(--aiws-text); background: var(--aiws-bg-l4);
+  border: 1px solid var(--aiws-border); border-radius: var(--aiws-radius-control);
+  cursor: pointer; white-space: nowrap; user-select: none;
+  transition: background-color var(--aiws-motion) var(--aiws-ease),
+    border-color var(--aiws-motion) var(--aiws-ease), color var(--aiws-motion) var(--aiws-ease),
+    opacity var(--aiws-motion) var(--aiws-ease);
+}
+.aiws-btn:hover:not(:disabled) { background: var(--aiws-bg-hover); border-color: var(--aiws-border-strong); }
+.aiws-btn:focus-visible { outline: 2px solid var(--aiws-accent-faint); outline-offset: 2px; }
+.aiws-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.aiws-btn__icon { display: inline-flex; flex: none; }
+.aiws-btn__icon svg { width: var(--aiws-icon); height: var(--aiws-icon); }
+.aiws-btn--lg { height: var(--aiws-control-h-lg); padding: 0 var(--aiws-space-4); }
+.aiws-btn--ghost { background: transparent; border-color: transparent; color: var(--aiws-text-muted); }
+.aiws-btn--ghost:hover:not(:disabled) { background: var(--aiws-bg-hover); border-color: transparent; color: var(--aiws-text); }
+.aiws-btn--primary { background: var(--aiws-accent-grad); border-color: transparent; color: var(--aiws-on-accent); font-weight: 600; }
+.aiws-btn--primary:hover:not(:disabled) { filter: brightness(1.06); }
+.aiws-btn--danger { color: var(--aiws-danger); background: var(--aiws-danger-soft); border-color: var(--aiws-danger); }
+.aiws-btn--danger:hover:not(:disabled) { background: var(--aiws-danger-soft); border-color: var(--aiws-danger); }
+
+/* ── IconButton ───────────────────────────────────────── */
+.aiws-icon-btn {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: var(--aiws-control-h); height: var(--aiws-control-h); padding: 0;
+  color: var(--aiws-text-muted); background: transparent;
+  border: 1px solid transparent; border-radius: var(--aiws-radius-control);
+  cursor: pointer;
+  transition: background-color var(--aiws-motion) var(--aiws-ease),
+    border-color var(--aiws-motion) var(--aiws-ease), color var(--aiws-motion) var(--aiws-ease),
+    opacity var(--aiws-motion) var(--aiws-ease);
+}
+.aiws-icon-btn svg { width: var(--aiws-icon); height: var(--aiws-icon); }
+.aiws-icon-btn:hover:not(:disabled) { background: var(--aiws-bg-hover); color: var(--aiws-text); }
+.aiws-icon-btn:focus-visible { outline: 2px solid var(--aiws-accent-faint); outline-offset: 2px; }
+.aiws-icon-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.aiws-icon-btn--default { color: var(--aiws-text); background: var(--aiws-bg-l4); border-color: var(--aiws-border); }
+.aiws-icon-btn--default:hover:not(:disabled) { border-color: var(--aiws-border-strong); }
+.aiws-icon-btn--danger { color: var(--aiws-danger); }
+.aiws-icon-btn--danger:hover:not(:disabled) { background: var(--aiws-danger-soft); color: var(--aiws-danger); }
+.aiws-icon-btn.is-active { color: var(--aiws-accent); background: var(--aiws-accent-soft); border-color: var(--aiws-accent-faint); }
+
+/* ── Input ────────────────────────────────────────────── */
+.aiws-input {
+  width: 100%; height: var(--aiws-control-h); padding: 0 var(--aiws-space-2);
+  font-family: var(--aiws-font-ui); font-size: var(--aiws-fs-control); color: var(--aiws-text);
+  background: var(--aiws-bg-l1);
+  border: 1px solid var(--aiws-border); border-radius: var(--aiws-radius-control);
+}
+.aiws-input::placeholder { color: var(--aiws-text-dim); }
+.aiws-input:hover:not(:disabled) { border-color: var(--aiws-border-strong); }
+.aiws-input:focus-visible { outline: 2px solid var(--aiws-accent-faint); outline-offset: 2px; border-color: var(--aiws-accent-faint); }
+.aiws-input:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Dialog ───────────────────────────────────────────── */
+.aiws-dialog-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(3, 3, 3, 0.72); }
+.aiws-dialog {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 61;
+  width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 48px); overflow: auto;
+  color: var(--aiws-text); font-family: var(--aiws-font-ui); font-size: var(--aiws-fs-body);
+  background: var(--aiws-bg-l5);
+  border: 1px solid var(--aiws-border); border-radius: var(--aiws-radius-card);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+.aiws-dialog:focus-visible { outline: 2px solid var(--aiws-accent-faint); outline-offset: 2px; }
+.aiws-dialog__title { margin: 0; font-size: var(--aiws-fs-section); font-weight: 600; }
+.aiws-dialog__desc { margin: 0; color: var(--aiws-text-muted); font-size: var(--aiws-fs-help); line-height: 1.5; }
+
+/* ── DropdownMenu ─────────────────────────────────────── */
+.aiws-menu {
+  z-index: 70; min-width: var(--radix-dropdown-menu-trigger-width, 168px); max-height: var(--radix-dropdown-menu-content-available-height, 70vh);
+  padding: var(--aiws-space-1); overflow-y: auto;
+  color: var(--aiws-text); font-family: var(--aiws-font-ui); font-size: var(--aiws-fs-control);
+  background: var(--aiws-bg-l6);
+  border: 1px solid var(--aiws-border); border-radius: var(--aiws-radius-menu);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+.aiws-menu__item {
+  display: flex; align-items: center; gap: var(--aiws-space-2);
+  padding: 6px var(--aiws-space-2); border-radius: 6px;
+  color: var(--aiws-text); cursor: pointer; user-select: none; outline: none;
+}
+.aiws-menu__item[data-highlighted] { background: var(--aiws-accent-soft); }
+.aiws-menu__item[data-disabled] { opacity: 0.45; cursor: not-allowed; }
+.aiws-menu__item.is-danger { color: var(--aiws-danger); }
+.aiws-menu__item.is-danger[data-highlighted] { background: var(--aiws-danger-soft); }
+.aiws-menu__item svg { width: var(--aiws-icon); height: var(--aiws-icon); flex: none; }
+.aiws-menu__label { padding: 6px var(--aiws-space-2) 2px; font-size: var(--aiws-fs-help); color: var(--aiws-text-dim); }
+.aiws-menu__sep { height: 1px; margin: var(--aiws-space-1) 0; background: var(--aiws-border); }
+
+/* ── Tabs ─────────────────────────────────────────────── */
+.aiws-tabs__list { display: flex; gap: var(--aiws-space-1); border-bottom: 1px solid var(--aiws-border); }
+.aiws-tabs__trigger {
+  appearance: none; margin-bottom: -1px; padding: var(--aiws-space-2) var(--aiws-space-3);
+  font-family: var(--aiws-font-ui); font-size: var(--aiws-fs-control); font-weight: 500;
+  color: var(--aiws-text-muted); background: transparent;
+  border: 0; border-bottom: 2px solid transparent; border-radius: var(--aiws-radius-control) var(--aiws-radius-control) 0 0;
+  cursor: pointer;
+  transition: color var(--aiws-motion) var(--aiws-ease), background-color var(--aiws-motion) var(--aiws-ease),
+    border-color var(--aiws-motion) var(--aiws-ease);
+}
+.aiws-tabs__trigger:hover { color: var(--aiws-text); background: var(--aiws-bg-hover); }
+.aiws-tabs__trigger[data-state="active"] { color: var(--aiws-accent); border-bottom-color: var(--aiws-accent); }
+.aiws-tabs__trigger:focus-visible { outline: 2px solid var(--aiws-accent-faint); outline-offset: 2px; }
+.aiws-tabs__content { padding-top: var(--aiws-space-3); }
+.aiws-tabs__content:focus-visible { outline: 2px solid var(--aiws-accent-faint); outline-offset: 2px; }
+
+/* ── Tooltip ──────────────────────────────────────────── */
+.aiws-tooltip {
+  z-index: 80; max-width: 280px; padding: 6px var(--aiws-space-2);
+  color: var(--aiws-text); font-family: var(--aiws-font-ui); font-size: var(--aiws-fs-help); line-height: 1.4;
+  background: var(--aiws-bg-l6);
+  border: 1px solid var(--aiws-border); border-radius: var(--aiws-radius-menu);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}

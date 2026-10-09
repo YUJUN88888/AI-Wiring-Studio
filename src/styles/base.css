@@ -1,0 +1,21 @@
+:root { font-family: var(--aiws-font-ui); color: var(--aiws-text); background: var(--aiws-bg-l0); }
+* { box-sizing: border-box; }
+body { margin: 0; height: 100vh; overflow: hidden; }
+button, input { font: inherit; }
+/* 滚动条：只保留滑块，隐去轨道与两端箭头按钮，滑块压深压细（WebView2 / Chromium）。
+   不写 scrollbar-width / scrollbar-color：Chromium 一旦收到这两个标准属性，会忽略
+   ::-webkit-scrollbar 系列规则，导致箭头按钮隐不掉。 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; border: 0; }
+::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+::-webkit-scrollbar-thumb { background: var(--aiws-scrollbar); border-radius: var(--aiws-radius-pill); min-height: 32px; }
+::-webkit-scrollbar-thumb:hover { background: var(--aiws-scrollbar-hover); }
+::-webkit-scrollbar-corner { background: transparent; }
+h2 { font-size:13px; margin: 0 0 13px; color:var(--aiws-text-muted); }
+h3 { font-size:12px; margin-top:22px; color:var(--aiws-text-muted); }
+/* 兼容层（受控范围）：老弹窗与画布内元素仍用裸 button/input，样式只在工作台与 Radix 弹窗内生效，
+   不再全局外溢；用 :where() 把特异性压到最低，避免盖住 .aiws-btn / .titlebar-button 等类级规则。
+   待所有裸元素迁移到 .aiws-* 后删除（见 DESIGN.md 第 7 节第 10 条）。 */
+:where(.workspace, .aiws-dialog) input { width:100%; border:1px solid var(--aiws-border); background:var(--aiws-bg-l1); color:var(--aiws-text); padding:9px; border-radius:6px; }
+:where(.workspace, .aiws-dialog) button { border:1px solid var(--aiws-border); border-radius:6px; background:var(--aiws-bg-l4); color:var(--aiws-text); padding:8px 10px; cursor:pointer; }
+ul { padding-left:18px; color:var(--aiws-text); font-size:13px; line-height:2; }

@@ -1,0 +1,123 @@
+/* 四行：标题栏 / 工具栏 / 内容 / 底栏。列与底栏高度走 CSS 变量，供收纳功能改写。
+   第 2 行锁死固定高度（单行紧凑工具栏 = 按钮 30 + 上下留白 8 + 1px 分隔线），
+   让工具栏高度不随状态文字长短变化，避免把画布顶下去导致连线坐标漂移。 */
+.workspace { display: grid; grid-template-columns: var(--left-w,248px) 1fr var(--right-w,266px); grid-template-rows: var(--titlebar-h,34px) var(--header-h,39px) 1fr var(--summary-h,auto); height: 100vh; }
+/* 侧栏底（L2）与右侧分隔线：作用域在 .library/.inspector，避免裸 aside 外溢。 */
+.library, .inspector { background: var(--aiws-bg-l2); padding: var(--aiws-space-3); }
+.inspector { grid-area: 3 / 3; border-left:1px solid var(--aiws-border); border-right:0; overflow-y:auto; min-height:0; }
+/* 侧栏内部滚动：否则内容变高会把 grid 行撑大，画布随之变高、fitView 重新排布，元件会被挤出可视区。 */
+/* 显式指定每个区块的行列：底部检查区是整行元素，若让网格自动排布它会先抢走整行，把检查器挤到第 4 行、压扁画布。 */
+.library { grid-area: 3 / 1; border-right:1px solid var(--aiws-border); overflow-y: auto; min-height: 0; display:flex; flex-direction:column; gap:var(--aiws-space-3); }
+.library > .hint { margin:0; }
+.catalog { display:grid; gap:6px; }
+.hint, .inspector p { color:var(--aiws-text-muted); font-size:var(--aiws-fs-help); line-height:1.5; }
+.canvas { grid-area: 3 / 2; position:relative; min-width:0; min-height:0; background:var(--aiws-canvas-color, #08090a); }
+.problems { display:grid; gap:7px; max-height:52vh; overflow:auto; }
+.problem { width:100%; text-align:left; border:1px solid var(--aiws-border); border-left:3px solid var(--aiws-pending); border-radius:var(--aiws-radius-control); padding:var(--aiws-space-2); background:var(--aiws-bg-l4); font-size:var(--aiws-fs-help); display:grid; gap:var(--aiws-space-1); color:var(--aiws-text); }
+.problem b { color:var(--aiws-text); }
+.problem.warning { border-left-color:var(--aiws-warning); }
+.problem.warning b { color:var(--aiws-warning); }
+.problem.error { border-left-color:var(--aiws-danger); }
+.problem.error b { color:var(--aiws-danger); }
+.problem.critical { border-left-color:var(--aiws-danger); }
+.problem.critical b { color:var(--aiws-danger); }
+.problem:hover { background:var(--aiws-bg-hover); border-color:var(--aiws-border-strong); }
+/* A15 新增两级结果：待确认＝灰蓝、优化建议＝绿。 */
+.problem.unconfirmed { border-left-color:var(--aiws-pending); }
+.problem.unconfirmed b { color:var(--aiws-pending); }
+.problem.suggestion { border-left-color:var(--aiws-ok); }
+.problem.suggestion b { color:var(--aiws-ok); }
+/* A15 问题详情：原因 / 可能后果 / 处理方法。 */
+.problem-detail { margin:0 0 var(--aiws-space-2); display:grid; gap:var(--aiws-space-1); font-size:11px; }
+.problem-detail div { display:grid; grid-template-columns:minmax(66px, .6fr) minmax(0, 1.4fr); gap:6px; }
+.problem-detail dt { color:var(--aiws-text-dim); }
+.problem-detail dd { margin:0; color:var(--aiws-text); overflow-wrap:anywhere; }
+/* A10 底部检查区：横跨整行的四类摘要，点击即定位受影响元件。只保留必要状态，尽量不挤占画布。 */
+.check-summary { grid-row: 4; grid-column: 1 / -1; display:flex; align-items:center; gap:var(--aiws-space-2); flex-wrap:wrap; padding:var(--aiws-space-1) var(--aiws-space-4); border-top:1px solid var(--aiws-border); background:var(--aiws-bg-l3); }
+.check-summary .hint { margin:0 0 0 auto; }
+.check-title { font-size:12px; color:var(--aiws-text-muted); }
+.check-chip { display:inline-flex; align-items:center; gap:var(--aiws-space-1); padding:3px 11px; font-size:12px; border-radius:var(--aiws-radius-pill); background:var(--aiws-bg-l4); border:1px solid var(--aiws-border); color:var(--aiws-text); }
+.check-chip:disabled { opacity:.45; cursor:default; }
+.check-chip.definite { border-color:var(--aiws-danger); color:var(--aiws-danger); }
+.check-chip.warning { border-color:var(--aiws-warning); color:var(--aiws-warning); }
+.check-chip.unconfirmed { border-color:var(--aiws-pending); color:var(--aiws-pending); }
+.check-chip.suggestion { border-color:var(--aiws-ok); color:var(--aiws-ok); }
+/* A5 电压网络：折进一个带滚动条的小窗口，右上角小三角可折叠；否则网络一多就把检查器撑爆。 */
+.nets { display:grid; gap:5px; margin-bottom:var(--aiws-space-4); max-height:180px; overflow-y:auto; padding:6px; border:1px solid var(--aiws-border); border-radius:var(--aiws-radius-control); background:var(--aiws-bg-l1); }
+.net { display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--aiws-space-2); padding:6px var(--aiws-space-2); border-left:3px solid var(--aiws-pending); background:var(--aiws-bg-l4); font-size:11px; color:var(--aiws-text); }
+.net.known { border-left-color:var(--aiws-ok); }
+.net.conflict { border-left-color:var(--aiws-danger); }
+.net.unknown { border-left-color:var(--aiws-pending); color:var(--aiws-text-muted); }
+.nets-heading { display:flex; align-items:center; justify-content:space-between; gap:var(--aiws-space-2); margin:0 0 var(--aiws-space-2); }
+.nets-heading h2 { margin:0; }
+/* A15 检查范围：与「电压网络」同一套折叠头，展开后列出五层的实际覆盖情况。 */
+.coverage-heading { margin-top:var(--aiws-space-4); }
+.coverage { list-style:none; margin:0; padding:0; display:grid; gap:6px; max-height:190px; overflow-y:auto; }
+.coverage-item { display:grid; gap:3px; padding:6px var(--aiws-space-2); border-left:3px solid var(--aiws-pending); background:var(--aiws-bg-l4); font-size:11px; }
+.coverage-item b { color:var(--aiws-text); }
+.coverage-item small { color:var(--aiws-text-muted); line-height:1.4; }
+.coverage-item.covered { border-left-color:var(--aiws-ok); }
+.coverage-item.covered b { color:var(--aiws-ok); }
+.coverage-item.partial { border-left-color:var(--aiws-warning); }
+.coverage-item.partial b { color:var(--aiws-warning); }
+.coverage-item.out_of_scope { border-left-color:var(--aiws-pending); }
+.coverage-item.out_of_scope b { color:var(--aiws-pending); }
+.nets-toggle { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; padding:0; flex:none; border:1px solid var(--aiws-border); border-radius:6px; background:var(--aiws-bg-l4); color:var(--aiws-text-muted); cursor:pointer; }
+.nets-toggle:hover { border-color:var(--aiws-border-strong); color:var(--aiws-text); }
+.nets-toggle svg { width:12px; height:12px; fill:currentColor; }
+.problems-heading { display:flex; align-items:baseline; justify-content:space-between; gap:var(--aiws-space-2); }
+.problems-heading span { color:var(--aiws-text-dim); font-size:11px; }
+.problem-filters { display:flex; flex-wrap:wrap; gap:var(--aiws-space-1); margin:0 0 var(--aiws-space-3); }
+.problem-filters button { padding:4px 6px; font-size:11px; border-color:var(--aiws-border); background:var(--aiws-bg-l4); color:var(--aiws-text-muted); }
+.problem-filters button.active { background:var(--aiws-accent-soft); color:var(--aiws-accent); border-color:var(--aiws-accent-faint); }
+.problem.selected { outline:2px solid var(--aiws-accent-faint); outline-offset:1px; }
+.evidence { margin:var(--aiws-space-3) 0; padding:9px; border:1px solid var(--aiws-border); border-radius:var(--aiws-radius-control); background:var(--aiws-bg-l1); }
+.evidence h3 { margin:0 0 5px; font-size:12px; color:var(--aiws-text-muted); }
+.evidence p { margin:0 0 var(--aiws-space-2); font-family:var(--aiws-font-mono); font-size:11px; }
+.problem-evidence { margin:0; display:grid; gap:5px; font-size:11px; }
+.problem-evidence div { display:grid; grid-template-columns:minmax(75px, .8fr) minmax(0, 1.2fr); gap:6px; }
+.problem-evidence dt { color:var(--aiws-text-dim); overflow-wrap:anywhere; }
+.problem-evidence dd { margin:0; color:var(--aiws-text); overflow-wrap:anywhere; }
+.evidence-empty { margin:0; }
+.user-component { display:grid; grid-template-columns:1fr auto auto; gap:4px; align-items:stretch; }
+.user-component button { margin-top:0; font-size:11px; }
+.ghost { padding:var(--aiws-space-2); background:var(--aiws-bg-l4); border-color:var(--aiws-border); color:var(--aiws-text-muted); }
+.ghost.danger { border-color:var(--aiws-danger); color:var(--aiws-danger); }
+.library-group { display:grid; gap:6px; margin-bottom:var(--aiws-space-3); }
+.library-group h4 { margin:2px 0 0; font-size:11px; font-weight:600; color:var(--aiws-text-muted); letter-spacing:.02em; }
+.user-component-tags { grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:4px; padding-bottom:2px; }
+.tag { font-size:10px; line-height:1.4; padding:2px 7px; border-radius:var(--aiws-radius-pill); background:var(--aiws-bg-l4); border:1px solid var(--aiws-border); color:var(--aiws-text-muted); }
+.tag.ok { border-color:var(--aiws-ok); color:var(--aiws-ok); }
+/* 批次3 面板收纳：收起侧的细窄展开条，贴在画布左右边缘中间。 */
+.panel-rail { position:absolute; top:50%; transform:translateY(-50%); z-index:6; width:18px; padding:14px 0; font-size:12px; line-height:1; border-radius:0; background:var(--aiws-bg-l4); border:1px solid var(--aiws-border); color:var(--aiws-text-muted); cursor:pointer; }
+.panel-rail:hover { color:var(--aiws-text); border-color:var(--aiws-border-strong); }
+.panel-rail-left { left:0; border-left:0; border-radius:0 8px 8px 0; }
+.panel-rail-right { right:0; border-right:0; border-radius:8px 0 0 8px; }
+/* 批次3 底部检查摘要的收起箭头：收起后只剩一条细条与展开箭头。 */
+.summary-toggle { display:inline-flex; align-items:center; justify-content:center; width:24px; height:22px; padding:0; line-height:1; font-size:11px; border-radius:6px; border:1px solid var(--aiws-border); background:var(--aiws-bg-l4); color:var(--aiws-text-muted); cursor:pointer; }
+.summary-toggle:hover { color:var(--aiws-text); border-color:var(--aiws-border-strong); }
+.check-summary[data-collapsed="true"] { min-height:34px; }
+/* 侧栏标题行：标题与收起按钮同一行，收起后整个侧栏隐藏（列宽由 --left-w/--right-w 归零）。 */
+.panel-head { display:flex; align-items:center; justify-content:space-between; gap:var(--aiws-space-2); }
+.panel-head h2 { margin:0; }
+.panel-collapse { flex:none; padding:0; height:24px; line-height:1; font-size:12px; border-radius:6px; border:1px solid var(--aiws-border); background:var(--aiws-bg-l4); color:var(--aiws-text-muted); cursor:pointer; }
+.panel-collapse:hover { color:var(--aiws-text); border-color:var(--aiws-border-strong); }
+.library[data-collapsed="true"], .inspector[data-collapsed="true"] { display:none; }
+/* 左侧元件库：搜索 + 分类 + 列表。添加/导入/新建归组为紧凑按钮，减少大按钮占位。 */
+.library-actions { display:grid; grid-template-columns:1fr 1fr; gap:var(--aiws-space-1); }
+.library-actions .aiws-btn { justify-content:flex-start; padding:0 var(--aiws-space-2); }
+.library-actions .library-actions-wide { grid-column:1 / -1; }
+.library-search { position:relative; }
+.library-filters { display:flex; flex-wrap:wrap; gap:var(--aiws-space-1); }
+.library-filters button { padding:4px 8px; font-size:11px; border-radius:var(--aiws-radius-pill); border:1px solid var(--aiws-border); background:var(--aiws-bg-l4); color:var(--aiws-text-muted); cursor:pointer; }
+.library-filters button.active { background:var(--aiws-accent-soft); color:var(--aiws-accent); border-color:var(--aiws-accent-faint); }
+.library-list { display:grid; gap:4px; }
+.library-list .library-item { display:flex; align-items:center; justify-content:space-between; gap:var(--aiws-space-2); width:100%; padding:var(--aiws-space-1) var(--aiws-space-2); text-align:left; font-size:12px; color:var(--aiws-text); background:var(--aiws-bg-l4); border:1px solid var(--aiws-border); border-radius:var(--aiws-radius-control); cursor:pointer; }
+.library-list .library-item:hover { background:var(--aiws-bg-hover); border-color:var(--aiws-border-strong); }
+.library-list .library-item small { color:var(--aiws-text-dim); font-size:10px; flex:none; }
+/* 右侧检查器：标签页把「属性」与「检查」分开，避免所有内容纵向堆叠。 */
+/* 常驻项目规模行：切换标签页时始终可见，紧凑不抢画布。 */
+.inspector-summary { margin:var(--aiws-space-2) 0 var(--aiws-space-2); }
+.inspector-tabs { margin:0; }
+.inspector-tabs .aiws-tabs__list { margin-bottom:var(--aiws-space-3); }
+.inspector-tabs .aiws-tabs__content { padding-top:0; }

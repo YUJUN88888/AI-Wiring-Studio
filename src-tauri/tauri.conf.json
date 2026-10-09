@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "AI Wiring Studio",
+  "version": "0.1.0",
+  "identifier": "com.aiwiringstudio.desktop",
+  "build": { "beforeDevCommand": "npm run dev", "devUrl": "http://localhost:5173", "beforeBuildCommand": "npm run build", "frontendDist": "../dist" },
+  "app": { "windows": [{ "title": "AI Wiring Studio", "width": 1280, "height": 800, "minWidth": 960, "minHeight": 640, "decorations": false }], "security": { "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;" } },
+  "bundle": {
+    "active": true,
+    "targets": "nsis",
+    "icon": [],
+    "resources": {
+      "../THIRD_PARTY_NOTICES.md": "THIRD_PARTY_NOTICES.md",
+      "../LICENSES": "LICENSES"
+    },
+    "fileAssociations": [{ "ext": ["aiws"], "name": "AI Wiring Studio Project", "description": "AI Wiring Studio project", "role": "Editor" }]
+  }
+}

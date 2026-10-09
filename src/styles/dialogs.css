@@ -1,0 +1,88 @@
+.editor-warning { margin:0; padding:9px 11px; border:1px solid var(--aiws-warning); border-radius:var(--aiws-radius-control); background:var(--aiws-warning-soft); color:var(--aiws-warning); font-size:12px; }
+/* 弹窗外壳：遮罩与居中/层级已由 Radix Dialog（.aiws-dialog-overlay/.aiws-dialog）负责，这里只管内部结构。 */
+.editor { width:min(940px, 100%); max-height:92vh; display:flex; flex-direction:column; border:1px solid var(--aiws-border); border-radius:var(--aiws-radius-card); background:var(--aiws-bg-l5); color:var(--aiws-text); box-shadow:0 24px 60px rgba(0,0,0,.7); }
+.editor-head { display:flex; align-items:baseline; gap:14px; padding:14px 18px; border-bottom:1px solid var(--aiws-border); }
+.editor-head strong { font-size:var(--aiws-fs-section); font-weight:600; }
+.editor-head span { color:var(--aiws-text-muted); font-size:var(--aiws-fs-help); }
+.editor-body { overflow:auto; padding:16px 18px; display:grid; gap:18px; }
+.editor-section h3 { margin:0 0 10px; font-size:var(--aiws-fs-help); color:var(--aiws-text-muted); }
+.editor-section-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+.editor-section-head h3 { margin:0; }
+.editor-section-head button { font-size:11px; padding:6px 9px; }
+.editor-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:10px; }
+.editor-field { display:grid; gap:4px; }
+.editor-field-name { font-size:11px; color:var(--aiws-text-muted); }
+.editor-field input, .editor-field select { width:100%; border:1px solid var(--aiws-border); background:var(--aiws-bg-l1); color:var(--aiws-text); padding:7px; border-radius:6px; font-size:12px; }
+.confidence { font-style:normal; font-size:10px; letter-spacing:.02em; }
+.confidence.unknown { color:var(--aiws-text-dim); }
+.confidence.confirmed { color:var(--aiws-ok); }
+.confidence.estimated { color:var(--aiws-warning); }
+.editor-pin { border:1px solid var(--aiws-border); border-radius:var(--aiws-radius-control); padding:11px; background:var(--aiws-bg-l4); margin-top:10px; }
+.editor-pin-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:9px; }
+.editor-pin-head b { font-size:12px; color:var(--aiws-text-muted); font-family:var(--aiws-font-mono); }
+.editor-pin-head button { font-size:11px; padding:5px 8px; }
+.editor-error { margin:0 18px; padding:9px 11px; border:1px solid var(--aiws-danger); border-radius:var(--aiws-radius-control); background:var(--aiws-danger-soft); color:var(--aiws-danger); font-size:12px; }
+.editor-foot { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:13px 18px; border-top:1px solid var(--aiws-border); }
+.editor-foot .hint { margin:0; }
+.editor-foot > div { display:flex; gap:8px; flex:none; }
+.editor-foot button.primary { background:var(--aiws-accent-grad); border-color:transparent; color:var(--aiws-on-accent); font-weight:600; }
+.image-editor { display:grid; gap:10px; }
+.image-toolbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.image-toolbar button { font-size:12px; padding:7px 10px; }
+.image-upload { display:inline-block; padding:7px 12px; border:1px solid #41698b; border-radius:6px; background:#163653; color:#dff5ff; font-size:12px; cursor:pointer; }
+.image-upload input { display:none; }
+.image-editor .hint { margin:0; }
+.crop-panel { display:grid; gap:9px; padding:11px; border:1px solid #2c3d55; border-radius:8px; background:#131d2d; }
+.crop-panel strong { font-size:12px; color:#bcd4ed; }
+.crop-stage { position:relative; overflow:hidden; border:1px solid #34435c; border-radius:6px; background:#0a0f18; cursor:crosshair; touch-action:none; }
+.crop-image { position:absolute; pointer-events:none; }
+.crop-selection { position:absolute; border:1px solid #65c3ff; background:#2797d633; pointer-events:none; }
+.crop-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.crop-actions .hint { margin-right:auto; }
+.ai-import { width:min(760px, 100%); }
+.ai-import textarea { width:100%; border:1px solid #34435c; background:#0c121e; color:#eef; padding:9px; border-radius:6px; font-size:12px; resize:vertical; }
+.ai-settings { display:grid; gap:10px; padding:11px; margin-top:8px; border:1px solid #2c3d55; border-radius:8px; background:#131d2d; }
+.ai-settings input { width:100%; border:1px solid #34435c; background:#0c121e; color:#eef; padding:7px; border-radius:6px; font-size:12px; }
+.ai-key-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.ai-key-row input { flex:1 1 220px; }
+.ai-key-row button { flex:none; }
+.ai-kind-row { display:flex; flex-wrap:wrap; gap:6px; }
+.ai-kind-row button { font-size:12px; padding:7px 11px; }
+.ai-kind-row button.active { background:#21618e; border-color:#65c3ff; color:#fff; }
+.ai-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.ai-notice { margin:0 18px; padding:9px 11px; border:1px solid #2f6b52; border-radius:6px; background:#122a22; color:#a8f0cd; font-size:12px; }
+.ai-image-preview { max-width:100%; max-height:220px; border:1px solid #34435c; border-radius:6px; background:#0a0f18; align-self:start; }
+.ai-name { margin-bottom:12px; }
+.ai-fields { display:grid; gap:6px; }
+.ai-field { display:grid; grid-template-columns:auto minmax(0, 1.1fr) minmax(0, 1.3fr) auto; gap:8px; align-items:center; padding:6px 8px; border:1px solid #2c3d55; border-radius:6px; background:#131d2d; font-size:12px; }
+.ai-field input[type=checkbox] { width:auto; }
+.ai-field-label { color:#c3d4e8; }
+.ai-field-value { color:#eef; overflow-wrap:anywhere; font-family:ui-monospace, monospace; font-size:11px; }
+.ai-pin-toggle { display:flex; align-items:center; gap:7px; cursor:pointer; }
+.ai-pin-toggle input[type=checkbox] { width:auto; }
+.wiring-code { width:min(880px, 100%); }
+.code-input { width:100%; border:1px solid #34435c; background:#0c121e; color:#eef; padding:9px; border-radius:6px; font-family:ui-monospace, monospace; font-size:12px; line-height:1.6; resize:vertical; }
+.code-block { max-height:340px; overflow:auto; margin:0; padding:11px; border:1px solid #2c3d55; border-radius:6px; background:#0c121e; color:#d7e6f7; font-family:ui-monospace, monospace; font-size:11px; line-height:1.65; white-space:pre-wrap; }
+.editor-section code { font-family:ui-monospace, monospace; font-size:11px; background:#0c121e; border:1px solid #2c3d55; border-radius:4px; padding:0 4px; }
+.warehouse { width:min(880px, 100%); }
+.warehouse-search { width:100%; border:1px solid #34435c; background:#0c121e; color:#eef; padding:8px; border-radius:6px; font-size:12px; }
+.warehouse-filters { margin-top:2px; }
+.missing-box { display:grid; gap:10px; padding:12px; border:1px solid #8b6a4a; border-radius:8px; background:#2a2418; }
+.missing-box h3 { margin:0; color:#ffdcb0; }
+.missing-box > .hint { margin:0; color:#e3cba6; }
+.missing-item { display:grid; gap:10px; padding:10px; border:1px solid #3a4f69; border-radius:8px; background:#131d2d; }
+.missing-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.missing-head button { flex:none; }
+.missing-meta { display:grid; gap:3px; min-width:0; }
+.missing-meta b { font-size:12px; color:#eaf4ff; }
+.missing-meta .hint { margin:0; }
+.missing-review { display:grid; gap:10px; padding-top:10px; border-top:1px dashed #2c3d55; }
+/* A1 设置-外观：紧凑的两列颜色项 + 背景三态按钮。 */
+.appearance { width:min(620px, 100%); }
+.appearance-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:12px; }
+.appearance-field { display:grid; gap:5px; padding:9px 11px; border:1px solid #2c3d55; border-radius:8px; background:#131d2d; }
+.appearance-color-row { display:flex; align-items:center; gap:9px; }
+.appearance-color-row input[type=color] { width:44px; height:28px; padding:2px; border:1px solid #34435c; border-radius:6px; background:#0c121e; cursor:pointer; }
+.appearance-color-row code { font-family:ui-monospace, monospace; font-size:12px; color:#d7e6f7; }
+.appearance-choices { display:flex; flex-wrap:wrap; gap:8px; }
+.appearance-choices button.active { background:#21618e; border-color:var(--aiws-ui-color, #65c3ff); color:#fff; }

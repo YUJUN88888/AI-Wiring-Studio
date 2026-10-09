@@ -1,0 +1,34 @@
+/* A 无边框窗口的自定义标题栏：与顶栏共用底色（--aiws-chrome-color）；整条是拖动区（data-tauri-drag-region 由 Tauri 内核处理）。 */
+.titlebar { grid-area: 1 / 1 / 2 / -1; display:flex; align-items:center; gap:var(--aiws-space-2); height:var(--titlebar-h,34px); padding-left:var(--aiws-space-3); background:var(--aiws-chrome-color,#0b0d0e); color:var(--aiws-chrome-text,#fcfcfc); border-bottom:1px solid var(--aiws-border); user-select:none; }
+.titlebar-mark { font-size:9px; color:var(--aiws-ok); }
+.titlebar-title { font-size:12px; letter-spacing:.02em; color:var(--aiws-text-muted); }
+.titlebar-fill { flex:1; align-self:stretch; }
+.titlebar[data-focused="false"] { opacity:.7; }
+.titlebar-buttons { display:flex; align-self:stretch; }
+.titlebar-button { display:inline-flex; align-items:center; justify-content:center; width:46px; height:100%; padding:0; border:0; border-radius:0; background:transparent; color:inherit; cursor:pointer; transition:background-color var(--aiws-motion) var(--aiws-ease); }
+.titlebar-button svg { width:10px; height:10px; fill:none; stroke:currentColor; stroke-width:1; }
+.titlebar-button:hover { background:var(--aiws-bg-hover); }
+.titlebar-button.close:hover { background:var(--aiws-danger); color:#fff; }
+.titlebar-button:focus-visible { outline:2px solid var(--aiws-accent-faint); outline-offset:-2px; }
+/* 顶部工具栏：单行紧凑高度（行高由 --header-h 锁死，避免状态文字长短改变整体高度、
+   把画布顶下去导致坐标漂移）。用 .app-menu 作用域，避免污染弹窗里的 <header class="editor-head">。 */
+.app-menu { grid-area: 2 / 1 / 3 / -1; display:flex; align-items:center; padding:var(--aiws-space-1) var(--aiws-space-3); border-bottom:1px solid var(--aiws-border); background:var(--aiws-chrome-color,#0b0d0e); color:var(--aiws-chrome-text,#fcfcfc); }
+.menu-row { display:flex; align-items:center; flex:1; gap:var(--aiws-space-2); min-width:0; }
+/* 分组与画布操作按钮取自然宽度、不参与收缩：只有末尾的状态文字可收缩+省略号，
+   否则窄窗口下按钮会被压到溢出分组、盖到状态文字上。 */
+.menu-actions { display:flex; align-items:center; gap:var(--aiws-space-1); flex:none; }
+.menu-group { display:flex; align-items:center; gap:var(--aiws-space-1); flex:none; }
+/* C：菜单栏里的按钮统一高度，画布 6 个按钮与打开/保存/设置一样高（e2e 断言全部为 30px）。 */
+.app-menu button, .app-menu .icon-button, .app-menu .aiws-btn, .app-menu .aiws-icon-btn { height:30px; display:inline-flex; align-items:center; justify-content:center; }
+.app-menu .icon-button, .app-menu .aiws-icon-btn { padding:0; width:30px; flex:none; }
+/* E：撤销/重做箭头与文字同为纯白；不可用时不再变灰，只靠 cursor:not-allowed 与无悬停反馈区分
+   （用户明确要求「箭头应该是白色的，与文字一样」）。 */
+.app-menu .aiws-icon-btn, .app-menu .aiws-icon-btn:disabled { color:var(--aiws-text); opacity:1; }
+.app-menu .aiws-btn--secondary { background:transparent; border-color:var(--aiws-border); }
+/* 画布操作走安静的按钮，只有「动手接线模式」激活时才用青色强调底。 */
+.menu-actions button { background:transparent; border-color:var(--aiws-border); color:var(--aiws-text-muted); padding:0 var(--aiws-space-2); font-size:var(--aiws-fs-control); white-space:nowrap; transition:background-color var(--aiws-motion) var(--aiws-ease), border-color var(--aiws-motion) var(--aiws-ease), color var(--aiws-motion) var(--aiws-ease); }
+.menu-actions button:hover { background:var(--aiws-bg-hover); color:var(--aiws-text); border-color:var(--aiws-border-strong); }
+.menu-actions button.active { background:var(--aiws-accent-soft); color:var(--aiws-accent); border-color:var(--aiws-accent-faint); }
+.menu-actions button:focus-visible { outline:2px solid var(--aiws-accent-faint); outline-offset:2px; }
+.status-dot { margin-left:auto; min-width:0; font-size:12px; color:var(--aiws-text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.status-dot::first-letter { color:var(--aiws-ok); }

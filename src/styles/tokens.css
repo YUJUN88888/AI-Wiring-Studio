@@ -1,0 +1,104 @@
+/*
+ * tokens.css — AI Wiring Studio UI 设计令牌（DESIGN.md 第 1–5 节的**唯一真源**）。
+ *
+ * 只声明本轮的**新语义 token**，不改动任何旧变量、不写死到业务选择器里：
+ *  - 新组件一律消费这里的 token，禁止再散落硬编码颜色/圆角/间距。
+ *  - 用户可保存的外观（--aiws-ui-color / --aiws-canvas-color / --aiws-wire-color /
+ *    --aiws-component-color / --aiws-chrome-color / --aiws-chrome-text）由 App 在运行时
+ *    写入根节点，**本文件绝不覆盖**；它们语义不变，仍优先于这里的默认值。
+ *  - 因此这里是"未被用户自定义时的默认观感"，属于兼容性扩展。
+ *
+ * 颜色语义归属：青色（accent）仅作 UI 强调，**不得**挪用为线路/元件的分类色；
+ * 错误/警告/待确认/通过必须同时带图标与文字，不能只靠颜色表达。
+ */
+:root {
+  /* 暗色主题：让原生控件（滚动条、select、checkbox）跟随深色，避免 Windows 下白底。 */
+  color-scheme: dark;
+
+  /* —— 背景层级 L0–L6（DESIGN.md 第 1 节）—— */
+  --aiws-bg-l0: #030303; /* 应用最底层 */
+  --aiws-bg-l1: #08090a; /* 画布视口底 */
+  --aiws-bg-l2: #0a0b0c; /* 左侧元件库 / 右侧检查器 */
+  --aiws-bg-l3: #0b0d0e; /* 标题栏 / 顶部工具栏 */
+  --aiws-bg-l4: #101314; /* 面板内容块 / 卡片 */
+  --aiws-bg-l5: #14181a; /* Dialog 内容面 */
+  --aiws-bg-l6: #1a1f22; /* DropdownMenu / Tooltip */
+
+  /* —— 文字（DESIGN.md 第 1 节）—— */
+  --aiws-text: #fcfcfc;
+  --aiws-text-muted: #b5b5b5;
+  --aiws-text-dim: #7a7a7a;
+
+  /* —— 强调色（DESIGN.md 第 1 节）—— */
+  --aiws-accent: #56d7fd;
+  --aiws-accent-hover: #7be2ff;
+  --aiws-accent-pressed: #3fc3ec;
+  --aiws-accent-soft: #112b33; /* 选中底 */
+  --aiws-accent-faint: rgba(86, 215, 253, 0.35); /* 描边 / 焦点环 */
+  --aiws-accent-grad: linear-gradient(135deg, #7be2ff, #3fc3ec); /* 唯一"张扬"主操作底 */
+  --aiws-on-accent: #032024; /* 主操作上的深色文字 */
+
+  /* —— 边框 / 悬停底（DESIGN.md 第 1、5 节）—— */
+  --aiws-border: rgba(255, 255, 255, 0.08);
+  --aiws-border-strong: rgba(255, 255, 255, 0.14);
+  --aiws-bg-hover: rgba(255, 255, 255, 0.06);
+
+  /* —— 滚动条（细深灰滑块；轨道与两端箭头按钮在 base.css 里隐藏）—— */
+  --aiws-scrollbar: #24272b;
+  --aiws-scrollbar-hover: #3a3f44;
+
+  /* —— 状态色（独立语义，不得被青色吞并；必配图标 + 文字）—— */
+  --aiws-danger: #ff6b6b;
+  --aiws-danger-soft: rgba(255, 107, 107, 0.12);
+  --aiws-warning: #ffc24b;
+  --aiws-warning-soft: rgba(255, 194, 75, 0.12);
+  --aiws-pending: #8fa3b0;
+  --aiws-pending-soft: rgba(143, 163, 176, 0.12);
+  --aiws-ok: #5bd69a;
+  --aiws-ok-soft: rgba(91, 214, 154, 0.12);
+
+  /* —— 字体族（最多两套：界面 + 等宽）—— */
+  --aiws-font-ui: system-ui, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --aiws-font-mono: "Cascadia Mono", Consolas, "Microsoft YaHei UI", monospace;
+
+  /* —— 字号（DESIGN.md 第 2 节）—— */
+  --aiws-fs-section: 16px;
+  --aiws-fs-body: 14px;
+  --aiws-fs-control: 13px;
+  --aiws-fs-help: 12px;
+
+  /* —— 间距层级（唯一允许的取值，DESIGN.md 第 3 节）—— */
+  --aiws-space-1: 4px;
+  --aiws-space-2: 8px;
+  --aiws-space-3: 12px;
+  --aiws-space-4: 16px;
+  --aiws-space-5: 24px;
+
+  /* —— 控件高度与图标尺寸（DESIGN.md 第 3 节）—— */
+  --aiws-control-h: 32px;
+  --aiws-control-h-lg: 36px;
+  --aiws-icon: 16px;
+  --aiws-icon-lg: 18px;
+
+  /* —— 圆角（DESIGN.md 第 4 节；画布内元件节点维持现状，不在此列）—— */
+  --aiws-radius-control: 8px;
+  --aiws-radius-card: 12px;
+  --aiws-radius-menu: 10px;
+  --aiws-radius-pill: 999px;
+
+  /* —— 动效（DESIGN.md 第 5 节：仅 transform/opacity/background-color/border-color）—— */
+  --aiws-motion-fast: 120ms;
+  --aiws-motion: 160ms;
+  --aiws-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* 尊重「减少动态效果」：全局关掉过渡与动画，不影响功能。 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

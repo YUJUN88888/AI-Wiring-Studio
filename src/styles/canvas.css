@@ -1,0 +1,146 @@
+.part { min-width:168px; color:#edf7ff; border:1px solid #4a617d; border-radius:8px; overflow:visible; box-shadow:0 8px 18px #0006; background:var(--aiws-component-color, #1a2739); }
+.part.source { border-color:#d78258; }
+.part.led { border-color:#d85a62; }
+.part-title { padding:10px 12px; font-weight:700; font-size:12px; border-bottom:1px solid #3a4f69; }
+.pins { padding:6px 0; }
+.pin { position:relative; display:flex; justify-content:center; min-height:25px; align-items:center; color:#bcd4ed; font-family:ui-monospace, monospace; font-size:12px; }
+.react-flow__handle { width:11px; height:11px; background:#5ad6ff; border:2px solid #0e1725; }
+.react-flow__handle-left { left:-7px; }
+.react-flow__handle-right { right:-7px; }
+/* G 画布右下角的 React Flow 署名：保留但弱化（更暗更小），不把它整个隐藏掉。 */
+.react-flow__attribution { opacity:.35; font-size:9px; }
+.react-flow__attribution a { color:#7f8fa4; }
+/* A6 电源/接地引脚的默认轮廓：电源＝红色轮廓；接地＝近黑描边 + 浅色外发光（深色主题下纯黑不可见）。两套渲染分支共用这一条。
+   2026-10-09 用户反馈：原本过硬过亮，描边与发光统一调细调淡。 */
+.react-flow__handle.pin-power { border-color:#bb807a; box-shadow:0 0 0 1px #e0453f1a, 0 0 2px #e0453f24; }
+.react-flow__handle.pin-gnd { border-color:#1c2531; box-shadow:0 0 0 1px #dfe9f729, 0 0 2px #cfe0f51c; }
+/* A2 撤销/重做图标按钮：只换外观，禁用态与快捷键不变。 */
+.icon-button { display:inline-flex; align-items:center; justify-content:center; padding:7px 9px; }
+.icon-button svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.react-flow__node.selected .part { outline: 3px solid var(--aiws-ui-color, #77ddff); outline-offset: 4px; box-shadow: 0 0 0 7px #2797d633, 0 10px 24px #000a; }
+.context-delete { position: fixed; z-index: 30; border-color: #ce5d65; background: #57252b; color: #fff; }
+.context-wire { position: fixed; z-index: 30; min-width: 156px; padding: 10px; border: 1px solid #4b6885; border-radius: 7px; background: #172437; box-shadow: 0 10px 24px #0008; display: grid; gap: 9px; font-size: 12px; }
+.context-wire .context-delete { position: static; width: 100%; }
+.context-component { max-height: calc(100vh - var(--menu-top, 8px) - 12px); max-width: calc(100vw - var(--menu-left, 8px) - 12px); overflow-y: auto; }
+.context-component button { width: 100%; font-size: 12px; }
+.context-component .image-upload { display: block; text-align: center; }
+/* 用户改过尺寸的文字元件：按定义尺寸渲染，并把引脚行在多余高度里垂直居中。 */
+.part.sized { display: flex; flex-direction: column; }
+.part.sized .pins { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.size-dialog { width: min(460px, 100%); }
+.wire-colors { display: flex; gap: 6px; }
+/* A13【快速选择】：三个维度各一组，每组一行候选按钮；菜单本身太高时可滚动。 */
+.context-quick { min-width: 210px; max-width: 268px; max-height: 70vh; overflow-y: auto; }
+.quick-group { display: grid; gap: 5px; }
+.quick-title { font-size: 11px; color: #8fa6c0; letter-spacing: .04em; }
+.quick-empty { font-size: 11px; color: #6d8098; }
+.quick-choice { display: flex; align-items: center; gap: 7px; width: 100%; text-align: left; font-size: 12px; padding: 6px 8px; }
+.quick-choice .color-swatch { width: 13px; height: 13px; border-width: 1px; flex: none; }
+.color-swatch { width: 21px; height: 21px; padding: 0; border: 2px solid #b8cae0; border-radius: 50%; }
+.react-flow__edge.selected .react-flow__edge-path { filter: drop-shadow(0 0 4px #fff); stroke-width: 5px; }
+/* 折线连线选中后的编辑手柄：折点圆点可拖动，线段命中区（透明粗线）可整段平移。 */
+.routed-bend { fill:#8be2ff; stroke:#0e1725; stroke-width:2; cursor:grab; }
+.routed-bend:hover { fill:#ffffff; }
+.routed-segment { stroke:transparent; stroke-width:16; fill:none; }
+.routed-segment:hover { stroke:#8be2ff44; }
+.image-hotspot-panel { display:grid; gap:9px; }
+.image-stage { position:relative; border:1px solid #34435c; border-radius:6px; background:#0a0f18; overflow:visible; touch-action:none; }
+/* 没有图片时也要能拖引脚：给一个网格底，方便判断引脚摆在盒子的哪个位置。 */
+.image-stage-empty { background-color:#0a0f18; background-image:linear-gradient(#223148 1px, transparent 1px), linear-gradient(90deg, #223148 1px, transparent 1px); background-size:24px 24px; }
+.image-stage-frame { position:absolute; overflow:hidden; }
+.image-stage-img { position:absolute; pointer-events:none; user-select:none; }
+.image-hotspot { position:absolute; width:12px; height:12px; transform:translate(-50%, -50%); cursor:grab; touch-action:none; }
+.image-hotspot-dot { position:absolute; inset:0; border-radius:50%; background:#5ad6ff; border:2px solid #0e1725; box-shadow:0 0 0 2px #2797d644; }
+.image-hotspot-label { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:10px; color:#cfe6ff; font-family:ui-monospace, monospace; background:#0c121ecc; padding:1px 4px; border-radius:4px; white-space:nowrap; }
+.image-hotspot[data-side="left"] .image-hotspot-label { left:auto; right:14px; }
+.image-hotspot-list { margin:0; padding-left:16px; color:#c3d4e8; font-size:11px; line-height:1.7; font-family:ui-monospace, monospace; }
+.part.image-part { position:relative; min-width:0; padding:0; background:var(--aiws-component-color, #0f1725); }
+/* 图片元件每个引脚只有一个可见圆点：接收落点的 target 热点与它重合但完全透明。 */
+.hotspot-hit { opacity:0; }
+.part-image-frame { position:absolute; overflow:hidden; }
+.part.image-part .part-image { position:absolute; pointer-events:none; user-select:none; }
+.image-part-title { position:absolute; left:0; top:-22px; max-width:100%; padding:2px 7px; border:1px solid #3a4f69; border-radius:5px; background:#162135dd; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* 标签贴在引脚内侧（左侧引脚向右、右侧引脚向左），既不越出盒子，也不压住引脚圆点。 */
+.part-pin-label { position:absolute; transform:translateY(-50%); font-size:11px; line-height:1.5; color:#eaf4ff; font-family:ui-monospace, monospace; background:#0c121ef0; border:1px solid #35506f; padding:1px 5px; border-radius:4px; white-space:nowrap; pointer-events:none; }
+.part-pin-label[data-side="right"] { transform:translate(18px, -50%); }
+.part-pin-label[data-side="left"] { transform:translate(calc(-100% - 18px), -50%); }
+/* A14 引脚网络高亮：点击引脚临时点亮整张电气网络（纯展示态，不改连线颜色、不写项目文件）。
+   规则放在 pin-power / pin-gnd 之后，同优先级时后写的生效，高亮态才能盖过默认轮廓色。 */
+.react-flow__handle.pin-lit { background:#ffd54a; border-color:#2b2200; box-shadow:0 0 0 3px #ffd54a55, 0 0 8px #ffd54ab3; }
+.part-pin-label.pin-lit { border-color:#f6d44c; background:#3a2f0bf0; color:#fff7d1; }
+.routed-edge-halo { fill:none; stroke:#ffd54a; stroke-width:9; stroke-opacity:.32; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+/* 批次1：深色背景上看不见的连线（默认地线色 #20242a 等）补一层浅色衬底，保证地线清晰可见。
+   衬底只画在连线之下、不吃指针事件，也不改连线自己的颜色。 */
+.routed-edge-casing { fill:none; stroke:#aec4dd; stroke-width:7; stroke-opacity:.26; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+/* A7 动手接线模式：「当下应接的线」用闪烁的黄色轮廓提示；未接好的线由 RoutedEdge 统一灰化。
+   轮廓不吃指针事件，所以双击、右键、折点拖动都不受影响。 */
+.routed-edge-suggested { fill:none; stroke:#ffd54a; stroke-width:9; stroke-opacity:.8; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; animation: wire-blink 1.1s ease-in-out infinite; }
+@keyframes wire-blink { 0%, 100% { stroke-opacity:.14; } 50% { stroke-opacity:.9; } }
+.canvas-actions button.active { background:#8a6b1c; border-color:#ffd54a; color:#fff8dc; }
+/* 动手接线模式的进度条：只作提示，不吃指针事件，免得挡住画布拖拽。 */
+.wiring-guide { position:absolute; left:14px; top:56px; z-index:5; max-width:min(470px, calc(100% - 28px)); display:grid; gap:4px; padding:10px 12px; border:1px solid #8a6b1c; border-radius:8px; background:#2a2418ee; font-size:12px; color:#f4e6c2; box-shadow:0 8px 20px #0007; pointer-events:none; }
+.wiring-guide strong { color:#ffd54a; }
+.wiring-guide .wiring-next { color:#fff; font-family:ui-monospace, monospace; font-size:11px; overflow-wrap:anywhere; }
+/* 左下角只保留「适配视口」一个按钮，并且做成透明底色：原来的白底按钮在深色画布上过于耀眼。 */
+.react-flow__controls { box-shadow:none; border-radius:6px; overflow:hidden; }
+.react-flow__controls-button { width:28px; height:28px; background:transparent; border:none; box-shadow:none; color:#9fb3d1; }
+.react-flow__controls-button:hover { background:#ffffff14; color:#eaf2ff; }
+.react-flow__controls-button svg { fill:currentColor; }
+/* A8 更新预览：绿色＝新增、黄色＝改写、半透明灰＝将被删除。这三条轮廓都只吃视觉，不吃指针事件。 */
+.part.diff-added { outline:3px solid #45d18c; outline-offset:4px; border-radius:8px; }
+.part.diff-changed { outline:3px solid #f6d44c; outline-offset:4px; border-radius:8px; }
+.part.diff-removed { opacity:.4; filter:grayscale(.7); }
+.routed-edge-added { fill:none; stroke:#45d18c; stroke-width:9; stroke-opacity:.9; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+.routed-edge-changed { fill:none; stroke:#f6d44c; stroke-width:9; stroke-opacity:.9; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+/* 预览条放在画布右上角：与左下角的检查摘要、左上角的动手接线进度错开，不互相遮挡。 */
+.update-preview { position:absolute; right:14px; top:56px; z-index:5; max-width:min(430px, calc(100% - 28px)); display:grid; gap:5px; padding:10px 12px; border:1px solid #2f6b52; border-radius:8px; background:#122a22ee; font-size:12px; color:#d6f5e5; box-shadow:0 8px 20px #0007; }
+.update-preview strong { color:#7feba8; }
+.update-preview .update-legend { color:#a8f0cd; font-size:11px; }
+.update-preview div { display:flex; gap:8px; }
+/* A11 成组徽标：挂在元件右上角，只作提示、不吃指针事件。 */
+.part-group-badge { position:absolute; right:-9px; top:-11px; padding:1px 6px; border-radius:9px; background:#22384f; border:1px solid var(--aiws-ui-color, #65c3ff); color:#dff1ff; font-size:10px; line-height:1.5; pointer-events:none; }
+/* 批次2 位置锁定徽标：挂在元件左下角，与成组徽标避开；同样只作提示。 */
+.part-lock-badge { position:absolute; left:-9px; bottom:-11px; padding:1px 6px; border-radius:9px; background:#3a2f18; border:1px solid #d8b45c; color:#f7e6b8; font-size:10px; line-height:1.5; pointer-events:none; }
+/* 批次2 功能分区底色框：走 ViewportPortal 与元件共用画布坐标。
+   z-index:-1 让它在元件与连线之下（只作背景），整块不吃指针事件——否则框内的空白处就点不到画布了。
+   只有标题按钮单独放开指针事件，用来点开重命名。 */
+.zone-band { position:absolute; z-index:-1; border:1px dashed #3a5470; border-radius:14px; background:#101a2a55; pointer-events:none; }
+.zone-band[data-zone="unclassified"] { border-style:dotted; border-color:#4b5568; background:#14182155; }
+.zone-band-title { position:absolute; left:12px; top:-11px; padding:2px 10px; border:1px solid #47617f; border-radius:10px; background:#16233a; color:#cfe2f6; font-size:11px; letter-spacing:.04em; pointer-events:auto; cursor:text; }
+.zone-band-title:hover { border-color:var(--aiws-ui-color, #65c3ff); color:#fff; }
+.zone-band-editor { position:absolute; left:12px; top:-13px; display:flex; gap:4px; align-items:center; padding:3px 6px; border:1px solid #47617f; border-radius:10px; background:#16233a; pointer-events:auto; }
+.zone-band-editor input { width:120px; padding:2px 6px; font-size:11px; }
+.zone-band-editor button { padding:2px 8px; font-size:11px; }
+/* 批次2 右键菜单里的分区选择：固定 7 个分区 + 「按分类自动」，当前生效的那个高亮。 */
+.context-zones { display:grid; gap:4px; padding:6px 0 2px; border-top:1px solid #2c3d55; }
+.context-zone-list { display:flex; flex-wrap:wrap; gap:4px; }
+.context-zone-list button { width:auto; flex:1 1 auto; padding:3px 8px; font-size:11px; }
+.context-zone-list button.active { background:#21618e; border-color:var(--aiws-ui-color, #65c3ff); color:#fff; font-weight:600; }
+/* 批次3 右键菜单里的线路分类：四类快捷 + 「按网络自动」；下面跟一个自定义分类文字的输入框。 */
+.context-purposes { display:grid; gap:4px; padding:6px 0 2px; border-top:1px solid #2c3d55; }
+.context-purpose-list { display:flex; flex-wrap:wrap; gap:4px; }
+.context-purpose-list button { width:auto; flex:1 1 auto; padding:3px 8px; font-size:11px; }
+.context-purpose-list button.active { background:#21618e; border-color:var(--aiws-ui-color, #65c3ff); color:#fff; font-weight:600; }
+.context-label { display:grid; gap:4px; }
+.context-label input { padding:5px 8px; font-size:11px; }
+/* 批次1：聚焦某个模块时，与它无关的元件退到背景；元件名仍保持可读。 */
+.part.focus-muted { opacity:.45; }
+/* 批次1 线路筛选：贴在画布底部中间，避开左下角的「适配视口」与右下角的署名。 */
+.wire-filter { position:absolute; left:50%; transform:translateX(-50%); bottom:12px; z-index:6; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:6px; max-width:min(760px, calc(100% - 130px)); padding:6px 10px; border:1px solid #2c3d55; border-radius:12px; background:#0f1826e8; box-shadow:0 8px 20px #0007; }
+.wire-filter .wire-filter-title { font-size:11px; color:#8fa6c0; letter-spacing:.04em; }
+.wire-filter-chip { padding:5px 11px; font-size:12px; border-radius:13px; border:1px solid #41698b; background:#162135; color:#cfe2f6; }
+.wire-filter-chip.active { background:#21618e; border-color:var(--aiws-ui-color, #65c3ff); color:#fff; font-weight:600; }
+.wire-filter-note { flex-basis:100%; text-align:center; font-size:11px; color:#f6d44c; }
+.wire-filter-toggle { width:20px; height:20px; padding:0; line-height:1; font-size:11px; border-radius:50%; border-color:#3b526c; background:#162135; color:#9db2cc; }
+/* 批次3 最小化态：整个筛选条缩成左下角一个按钮，位置避开左下角的「适配视口」控件。 */
+.wire-filter-min { position:absolute; left:14px; bottom:52px; z-index:6; padding:5px 10px; font-size:12px; border-radius:16px; border:1px solid #2c3d55; background:#0f1826e8; color:#cfe2f6; box-shadow:0 8px 20px #0007; }
+/* 批次1 选中线路的文字信息：起点、终点、用途、网络名——线路因此不再只靠颜色区分。 */
+/* 纯信息面板，没有任何可点控件：一律不吃指针事件，否则它会挡住下面的元件与连线，
+   让"看得见但点不到"（拖动/选中被面板截走）。内容会随选中变化，不需要用户在上面操作。 */
+.wire-info { position:absolute; right:14px; top:14px; z-index:6; max-width:min(340px, calc(100% - 28px)); display:grid; gap:5px; padding:10px 12px; border:1px solid #2f6b52; border-radius:8px; background:#0f1f1aee; font-size:12px; color:#dbeadf; box-shadow:0 10px 24px #0008; pointer-events:none; }
+.wire-info strong { color:#7feba8; }
+.wire-info dl { margin:0; display:grid; gap:4px; }
+.wire-info div { display:grid; grid-template-columns:minmax(58px, auto) minmax(0, 1fr); gap:8px; }
+.wire-info dt { color:#93b7a6; }
+.wire-info dd { margin:0; overflow-wrap:anywhere; font-family:ui-monospace, monospace; font-size:11px; }
+.wire-info .wire-info-note { color:#9fb8ab; font-size:11px; }

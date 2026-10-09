@@ -1,0 +1,38 @@
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+src-tauri/target/
+src-tauri/gen/
+
+# 测试与覆盖率产物
+test-results/
+playwright-report/
+coverage/
+
+# 日志
+*.log
+debug.log
+
+# 缓存与 TS 增量
+*.tsbuildinfo
+.vite/
+.cache/
+
+# 环境变量与密钥（切勿提交）
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+credentials*
+*secret*
+
+# 交付审阅材料（不随公开发布）
+_review/
+
+# 操作系统
+Thumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,20 @@
+[package]
+name = "ai-wiring-studio"
+version = "0.1.0"
+description = "AI Wiring Studio"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+dirs = "6"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# API Key 只存放在 Windows 凭据管理器，绝不写入项目文件、用户库或日志。
+keyring = { version = "3", default-features = false, features = ["windows-native"] }
+# 由 Rust 侧直接发起 AI 请求，密钥因此永不进入前端 JS。
+ureq = { version = "2", features = ["json"] }
+
